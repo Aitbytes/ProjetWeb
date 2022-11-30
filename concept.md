@@ -9,3 +9,10 @@
 de prendre une carte ou de passer
 
 ## Etapes du jeu: 
+
+
+## fonctions:
+-Start() 
+    Qui démarre le jeu
+    La mise (pas encore)
+    Tirage des cartes initiales de cha 

@@ -48,6 +48,7 @@ let player = class {
     constructor() {
         this.cards = [];
         this.money = 0;
+        this.bet = 0;
     }
     draw(D){
         this.cards.push(D.pullRandomCard());
@@ -60,7 +61,7 @@ let player = class {
 
 /*
 function turn() {
-    det();
+    bet();
     distribution();
     dealHand();
     playerChoice();

@@ -15,15 +15,18 @@ let deck = class {
         this.liste = D;
     }
 
-    shuffle(n){
-        for (let i=0; i<n; i++ ){
-            let l1 = Math.floor(Math.random()*this.liste.lenght);
-            let l2 = Math.floor(Math.random()*this.liste.lenght);
-            let temp = this.liste[l1];
-            this.liste[l1]=deck[l2];
-            this.liste[l2]=temp;
-        }
+    seeRandomCard() {
+        let location = Math.floor(Math.random()*this.liste.length);
+        let selectedCard=this.liste[location];
+        return selectedCard;
+    };
+
+    pullRandomCard() {
+        let location = Math.floor(Math.random()*this.liste.length);
+        return this.liste.splice(location,1);
     }
+
+    
 
 };
 

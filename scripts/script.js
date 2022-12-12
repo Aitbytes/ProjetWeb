@@ -9,7 +9,7 @@ let deck = class {
         let D =[];
         for (const val in VALEURES) {
             for (const coul in COULEURES) {
-                D.push({valeure:VALEURES[val], couleur:COULEURES[coul]});
+                D.push({valeure:VALEURES[val], couleur:COULEURES[coul], shown: false});
             }
         }
         this.liste = D;
@@ -19,7 +19,7 @@ let deck = class {
         let location = Math.floor(Math.random()*this.liste.length);
         let selectedCard=this.liste[location];
         return selectedCard;
-    };
+    }
 
     pullRandomCard() {
         let location = Math.floor(Math.random()*this.liste.length);
@@ -31,3 +31,30 @@ let deck = class {
 };
 
 
+/*
+let player = class {
+
+    constructor() {
+        this.cards = [];
+        this.money = 0;
+        this.
+    }
+};
+
+
+function turn() {
+    det();
+    distribution();
+    dealHand();
+    playerChoice();
+    close();
+
+}
+
+function playerChoice() {
+    for (Player in PlayersList) {
+
+    }
+}
+
+*/

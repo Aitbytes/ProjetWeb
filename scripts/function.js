@@ -9,9 +9,9 @@ function testDealer(D){
     dealer = new player;
     dealer.draw(D);
     dealer.draw(D);
-    dealer.turnCard(0);
+    dealer.cards[0].turnCard();
     dealerText=document.createElement('p');
-    dealerText.innerHTML=`${dealer.cards[0][0].value} ${dealer.cards[0][0].color}`;
+    dealerText.innerHTML=`${dealer.cards[0].value} ${dealer.cards[0].color}`;
     DEALER.append(dealerText);
     console.log(dealer.cards);
 }

@@ -3,6 +3,8 @@ const COULEURES = ['♠','♥','♦','♣'];
 
 console.log(VALEURES);
 
+
+
 let card = class {
     constructor(value, color){
         this.value = value;
@@ -35,7 +37,7 @@ let deck = class {
 
     pullRandomCard() {
         let location = Math.floor(Math.random()*this.liste.length);
-        return this.liste.splice(location,1);
+        return this.liste.splice(location,1)[0];
     }
 
     
@@ -54,13 +56,46 @@ let player = class {
         this.cards.push(D.pullRandomCard());
     }
     turnCard(N){
-        this.cards[N][0].turnCard();
+        this.cards[N].turnCard();
     }
+    betAmount(amount) {
+        if (amount>this.money){
+            console.log("You broke nigga");
+        }
+        else{
+            this.bet = amount;
+            this.money = this.money-this.bet;
+        }
+    }
+    doubleDown(){
+        if (this.bet>this.money){
+            console.log("You broke nigga");
+        }
+        else{
+            this.money = this.money-this.bet;
+            this.bet = 2*this.bet;
+        }
+    }
+    lay(){
+        this.money = this.bet;
+        this.cards = [];
+    }
+
 
 };
 
+function initPlayers(playerList){
+    list[0] = new player;
+    list[0].money = Infinity;
+    list[1] = new player;
+    list[1] = parseInt(prompt("how much money to begin with"));
+}
+
+
+
 /*
 function turn() {
+    initPlayers();
     bet();
     distribution();
     dealHand();

@@ -4,10 +4,24 @@ const PLAYER = document.getElementById("player") ;
 const Hit_BUTTON = document.getElementById("hit_button") ; 
 const Pass_BUTTON = document.getElementById("pass_button") ; 
 
- 
-const dealHand = (deck) => {
-    const dealerhand=[deck.pullRandomCard(), deck.pullRandomCard()]
-    dealerhand[0].shown= (true)
-    dealerhand.forEach((deck))
-    console.log(dealerhand)
-    
+
+function testDealer(D){
+    dealer = new player;
+    dealer.draw(D);
+    dealer.draw(D);
+    dealer.turnCard(0);
+    console.log(dealer.cards);
+}
+
+
+/*
+function dealHand(Deck) {
+    let dealerhand=[];
+    dealerhand[0]=Deck.pullRandomCard();
+    dealerhand[1]=Deck.pullRandomCard();
+
+    dealerhand[0].turnCard();
+    console.log(dealerhand);
+} 
+*/
+

@@ -3,13 +3,25 @@ const COULEURES = ['♠','♥','♦','♣'];
 
 console.log(VALEURES);
 
+let card = class {
+    constructor(value, color){
+        this.value = value;
+        this.color = color;
+        this.shown = false;
+    }
+    turnCard(){
+        this.shown= !(this.shown);
+    }
+}
+
 let deck = class {
 
     constructor() {
         let D =[];
         for (const val in VALEURES) {
             for (const coul in COULEURES) {
-                D.push({valeure:VALEURES[val], couleur:COULEURES[coul], shown: false});
+                let new_card = new card(VALEURES[val], COULEURES[coul]);
+                D.push(new_card);
             }
         }
         this.liste = D;
@@ -31,17 +43,22 @@ let deck = class {
 };
 
 
-/*
 let player = class {
 
     constructor() {
         this.cards = [];
         this.money = 0;
-        this.
     }
+    draw(D){
+        this.cards.push(D.pullRandomCard());
+    }
+    turnCard(N){
+        this.cards[N][0].turnCard();
+    }
+
 };
 
-
+/*
 function turn() {
     det();
     distribution();

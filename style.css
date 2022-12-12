@@ -1,0 +1,40 @@
+.cards {
+    display : flex ;
+    gap : 10px;
+
+}
+
+.card {
+    height : 120 px;
+    width: 120 px;
+    border : 2px solid black;
+    padding-top : 60 px ;
+    border-radius : 10 px ;
+    font-size : 3rem;
+    text-align : center ;
+    box-shadow: 1 px 1 px 3px 1 px rgba(128,128,128)
+}
+
+.card[data-red =true]{
+    color :red
+}
+
+.back{
+    content: "";
+    background-color: green;
+}
+
+button {
+    height: 50px ;
+    width : fit-content;
+    padding: 10px 30px 10px;
+    margin: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 0 3px 1 px rgba(141,255,175,0.5);
+    border-radius: 10 px;
+}
+
+.layout{
+    text-align: center;
+}

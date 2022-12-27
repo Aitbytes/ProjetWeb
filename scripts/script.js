@@ -1,9 +1,8 @@
 const VALEURES = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'Q', 'K'];
 const COULEURES = ['♠','♥','♦','♣'];
+const CLASSIC = "Human vs DealerAI"
 
 console.log(VALEURES);
-
-
 
 let card = class {
     constructor(value, color){
@@ -13,6 +12,10 @@ let card = class {
     }
     turnCard(){
         this.shown= !(this.shown);
+    }
+    worth(){
+        let parse=parseInt(this.value)
+        return parse || 10;
     }
 }
 
@@ -28,19 +31,15 @@ let deck = class {
         }
         this.liste = D;
     }
-
     seeRandomCard() {
         let location = Math.floor(Math.random()*this.liste.length);
         let selectedCard=this.liste[location];
         return selectedCard;
     }
-
     pullRandomCard() {
         let location = Math.floor(Math.random()*this.liste.length);
         return this.liste.splice(location,1)[0];
     }
-
-    
 
 };
 
@@ -53,8 +52,10 @@ let player = class {
         this.bet = 0;
         this.type= "AI"
     }
-    draw(D){
-        this.cards.push(D.pullRandomCard());
+    draw(D, howMany){
+        for (let i=0; i< howMany; i++){
+            this.cards.push(D.pullRandomCard());
+        }
     }
     turnCard(N){
         this.cards[N].turnCard();
@@ -97,14 +98,28 @@ let player = class {
         this.money = this.money-this.bet;
         this.cards = [];
     }
+    count(){
+        let total =0;
+        this.cards= this.cards.sort((a,b)=> (b.worth() - a.worth()) );
+        /*
+        for (i in this.cards){
+            if (this.cards[i].value != '1'){
+                total =+ parseInt(this.cards[i].value);
+            }
+            else {
+                if (this.type =="Human Player"){
+
+                }
+            }
+        }
+        */
+    }
 
 
 };
 
-
-
-function initPlayers(){
-    
+function initPlayers_1vsAI(){
+    list=[]
     list[0] = new player;
     list[0].money = Infinity;
     list[0].type = "Dealer";
@@ -115,28 +130,53 @@ function initPlayers(){
     return list;
 }
 
-function bet(){
-    for (Player in playerList) {
-        if (Player.type=="Player"){
-            ;
-            Player.betAmount(betAmount);
+let game = class {
 
+    constructor(){
+        this.playerList=[];
+        this.deck=[];
+    }
+
+    initDeck(){
+        this.deck = new deck;
+
+    }
+    initPlayers(mode){
+        if (mode=="Human vs DealerAI"){
+            this.playerList=initPlayers_1vsAI();
         }
     }
-}
+    initGame(mode){
+        this.initDeck();
+        this.initPlayers(mode);
+    }
+    betting(){
+        this.playerList.map(x=>x.betAmount());
+    }
+    cardDistribution(){
+        this.playerList.map(x=>{x.draw(this.deck,2)} ) ;
+        this.playerList.map(x=>{ x.cards.map(x=>x.turnCard()) } ) ;
+    }
 
-/*
-function turn() {
+    playTurn(mode){
+        this.initGame(mode);
+        this.betting()
+        this.cardDistribution()
+    }
+};
 
-    let PlayersList=initPlayers();
-    bet();
-    distribution();
+
+
+
+
+
+/*    distribution();
     dealHand();
     playerChoice();
     close();
+*/
 
-}
-
+/*
 function playerChoice() {
     for (Player in PlayersList) {
 

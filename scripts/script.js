@@ -2,7 +2,11 @@ const VALEURES = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'Q', '
 const COULEURES = ['♠','♥','♦','♣'];
 const CLASSIC = "Human vs DealerAI"
 
-console.log(VALEURES);
+
+
+function argMax(array) {
+    return [].map.call(array, (x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+}
 
 let card = class {
     constructor(value, color){
@@ -14,6 +18,9 @@ let card = class {
         this.shown= !(this.shown);
     }
     worth(){
+        if (this.value=='A'){
+            return 1
+        }
         let parse=parseInt(this.value)
         return parse || 10;
     }
@@ -40,6 +47,12 @@ let deck = class {
         let location = Math.floor(Math.random()*this.liste.length);
         return this.liste.splice(location,1)[0];
     }
+    putCardsIn(cards){
+        this.liste= this.liste.concat(cards);
+    }
+    Esperance(){
+        return this.liste.reduce((total, current)=> (total+current.worth()),0)/this.liste.length
+    }
 
 };
 
@@ -57,6 +70,11 @@ let player = class {
             this.cards.push(D.pullRandomCard());
         }
     }
+    returnCards(D){
+        D.putCardsIn(this.cards);
+        this.cards=[];
+    }
+
     turnCard(N){
         this.cards[N].turnCard();
     }
@@ -73,60 +91,103 @@ let player = class {
             }  
         }
         else if (this.type=="AI") {
-            amount = math.random()*this.money;
+            let amount = Math.floor(Math.random()*this.money);
             this.bet= amount;
             this.money = this.money-amount;
         }
     }
-    doubleDown(){
-        if (this.type=="Human Player"){
+    doubleDown(D){
+        if (this.type=="Human Player" && confirm("Do you want to double down ?")){
             if (this.bet>this.money){
                 console.log("You broke nigga");
             }
             else{
                 this.money = this.money-this.bet;
                 this.bet = 2*this.bet;
+                this.draw(D,1);
             }
-        } else if (this.type="AI" && this.bet< this.money/2 && Math.random()< 0.5) {
+        } else if (this.type="AI" && this.bet< this.money/2 && this.count()+D.Esperance()< 21) {
             this.money = this.money-this.bet;
             this.bet = 2*this.bet;
+            this.draw(D,1);
+
         }
-        
+        if (this.count()>21) this.lay(D);
     }
-    lay(){
+    drawAnotherCard(D){
+        if (this.type=="Human Player") {
+            while (confirm("Do you want to draw another card")) this.draw(D,1);
+            if (this.count()>21) this.lay(D);
+        }
+        else if (this.type=="AI"){
+            let Esperance = 0;        
+            while (true){
+                Esperance = D.Esperance();
+                if (Esperance + this.count() <= 21) {
+                    this.draw(D,1);
+                }
+                else break;
+            }
+            if (this.count()>21) this.lay(D);
+        }
+    }
+    lay(D){
         
-        this.money = this.money-this.bet;
-        this.cards = [];
+        this.bet = 0;
+        this.returnCards(D);
     }
     count(){
-        let total =0;
-        this.cards= this.cards.sort((a,b)=> (b.worth() - a.worth()) );
-        /*
-        for (i in this.cards){
-            if (this.cards[i].value != '1'){
-                total =+ parseInt(this.cards[i].value);
+        let pointsArray = []
+        pointsArray = this.cards.map(x=>x.worth());
+        pointsArray.sort((a,b)=> b-a );
+        let sum = 0;
+        let j = 0;
+        let ptsi = 0
+        let choice =0;
+        for (let i in pointsArray){
+            ptsi = pointsArray[i];
+
+            if ( ptsi != 1) {
+                sum += ptsi;
             }
             else {
-                if (this.type =="Human Player"){
-
+                if (this.type=="Human Player"){
+                    choice = confirm(`do you want to give a value of eleven (11) to your ${j+1}'th ace`) ? 11 : 1;
+                    sum+=choice;
+                }
+                else {
+                    sum += (sum + 11 > 21) ? 1: 11;
                 }
             }
         }
-        */
+        return sum;
     }
+    blackJacks(){
 
+        this.money+=this.bet*2;
+        this.bet = 0;
+        if (this.type=="Human Player"){
+            alert('Congratulations, you got a Blackjack ');
+            this.returnCards();
+        }
+        
+    }
+    win(D){
+        this.money += this.bet*2;
+        this.returnCards(D);
+    }
+    getMoneyBack(D){
+        this.money += this.bet;
+        this.returnCards(D)
+    }
 
 };
 
 function initPlayers_1vsAI(){
-    list=[]
+    let list = [];
     list[0] = new player;
-    list[0].money = Infinity;
-    list[0].type = "Dealer";
-
-    list[1] = new player;
-    list[1].type = "Human Player"
-    list[1].money = parseInt(prompt("how much money to begin with"));
+    list[0].type = "Human Player"
+    list[0].money = parseInt(prompt("how much money to begin with"));
     return list;
 }
 
@@ -135,6 +196,8 @@ let game = class {
     constructor(){
         this.playerList=[];
         this.deck=[];
+        this.dealer = new player;
+        this.dealer.type="Dealer";
     }
 
     initDeck(){
@@ -156,17 +219,59 @@ let game = class {
     cardDistribution(){
         this.playerList.map(x=>{x.draw(this.deck,2)} ) ;
         this.playerList.map(x=>{ x.cards.map(x=>x.turnCard()) } ) ;
+        this.dealer.draw(this.deck,1);
+    }
+    blackJacks(){
+        for (let i in this.playerList){
+            if (this.playerList[i].count()==21){
+                this.playerList[i].blackJacks();
+            }
+        }
+    }
+    getPlayersChoices() {
+        for ( let Player of this.playerList){
+            if (Player.bet==0){
+                continue;
+            }
+            Player.doubleDown(this.deck);
+            Player.drawAnotherCard(this.deck);
+            if(Player.type =="Human Player" && confirm("Do you want to lay ?")) Player.lay();
+        }
+    }
+    getWinner(){
+        let Points = Array.from(this.playerList)
+    }
+    dealerDraws(){
+        while (this.dealer.count<17) this.dealer.draw(this.deck,1);
+        let dealerCount = this.dealer.count();
+        if(dealerCount>21) this.playerList.map((x,i)=>x.win(this.deck));
+        
+        else {
+            for (let Player of this.playerList) {
+                if (Player.count() < dealerCount) Player.lay(this.deck);
+                else if (Player.count() == dealerCount) Player.getMoneyBack(this.deck);
+                else Player.win(this.deck);
+            } 
+        }
     }
 
     playTurn(mode){
         this.initGame(mode);
-        this.betting()
-        this.cardDistribution()
+        this.betting();
+        this.cardDistribution();
+        this.blackJacks()
+        this.getPlayersChoices();
+        this.dealerDraws();
+
     }
 };
 
+function Test(){
+    thegame = new game;
+    thegame.playTurn(CLASSIC);
+}
 
-
+Test();
 
 
 

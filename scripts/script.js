@@ -309,4 +309,4 @@ let calcValue = (hand) => {
         value += (hasAce-1)*1;
     }
     return value;
-
+}

@@ -64,11 +64,15 @@ let player = class {
         this.money = 0;
         this.bet = 0;
         this.type= "AI"
+        this.count = 0
     }
     draw(D, howMany){
         for (let i=0; i< howMany; i++){
             this.cards.push(D.pullRandomCard());
-        }
+            this.count += 
+            
+        } 
+        
     }
     returnCards(D){
         D.putCardsIn(this.cards);
@@ -253,6 +257,7 @@ let game = class {
                 else Player.win(this.deck);
             } 
         }
+        this.dealer.returnCards(this.deck);
     }
 
     playTurn(mode){

@@ -69,7 +69,7 @@ let player = class {
     draw(D, howMany){
         for (let i=0; i< howMany; i++){
             this.cards.push(D.pullRandomCard());
-            this.count += 
+            
             
         } 
         

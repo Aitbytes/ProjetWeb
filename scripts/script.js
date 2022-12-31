@@ -2,13 +2,12 @@ const VALEURES = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'Q', '
 const COULEURES = ['♠','♥','♦','♣'];
 const CLASSIC = "Human vs DealerAI"
 
-<<<<<<< HEAD
 
 
 function argMax(array) {
     return [].map.call(array, (x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
 }
-=======
+
 const DEALER = document.getElementById("dealer");
 // j'ai vu que t'as déjà mis la classe player , const PLAYER = document.getElementById("player");
 const HIT_BUTTON = document.getElementById("hit-button");
@@ -18,7 +17,6 @@ const NOTICE = document.getElementById("notice");
 const NEX_HAND_BUTTON = document.getElementById("next-hand-button");
 
 console.log(VALEURES);
->>>>>>> b1b8caa6f04a750fb0f40a673eddcd8c08765609
 
 let card = class {
     constructor(value, color){
@@ -288,10 +286,8 @@ function Test(){
     thegame.playTurn(CLASSIC);
 }
 
-<<<<<<< HEAD
 Test();
 
-=======
 // la fonction pour calculer le montant des cartes 
 
 let calcValue = (hand) => {
@@ -313,20 +309,4 @@ let calcValue = (hand) => {
         value += (hasAce-1)*1;
     }
     return value;
->>>>>>> b1b8caa6f04a750fb0f40a673eddcd8c08765609
 
-
-/*    distribution();
-    dealHand();
-    playerChoice();
-    close();
-*/
-
-/*
-function playerChoice() {
-    for (Player in PlayersList) {
-
-    }
-}
-
-*/

@@ -1,4 +1,9 @@
-
+body, html {
+    margin: 0px;
+}
+body{
+    min-height: 100vh;
+}
 
 h1, h2, h3, h4, h5, h6, p{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -38,10 +43,17 @@ button{
     font-size: 3rem;
     text-align: center;
     box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.5);
+    background-color: white;
 }
 
-.card[data-red=true]{
+.card[data_red=true]{
     color: red;
+}
+
+.card:hover {
+    animation-name: glow;
+    animation-duration: 0.25s;
+    animation-fill-mode: both;
 }
 
 .back{
@@ -69,7 +81,7 @@ button{
     height: fit-content;
     width: fit-content;
     padding: 5%;
-    background: white;
+    background: rgba(255, 255, 255, 0.5);
     border: none;
     border-radius: 10px;
     box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
@@ -80,4 +92,35 @@ button{
     padding: 0;
     white-space: pre-wrap;
     line-height: 150%;
+}
+
+@keyframes glow {
+    from {box-shadow: 1px 1px 3px 1px black}
+    to {box-shadow: 0px 0px 3px 3px yellow;}
+    
+}
+.header {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    align-items: center;
+    
+    
+}
+
+header p {
+    margin: 15px;
+    font-size: larger;
+    font-weight: 800;
+}
+.moneyDisplay {
+    background-color: white;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    border: 2px solid black;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

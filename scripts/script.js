@@ -9,14 +9,13 @@ function argMax(array) {
 }
 
 const DEALER = document.getElementById("dealer");
-// j'ai vu que t'as déjà mis la classe player , const PLAYER = document.getElementById("player");
+const PLAYER = document.getElementById("player");
 const HIT_BUTTON = document.getElementById("hit-button");
 const PASS_BUTTON = document.getElementById("pass-button");
 const BUTTON_CONTAINER = document.getElementById("button-container");
 const NOTICE = document.getElementById("notice");
 const NEX_HAND_BUTTON = document.getElementById("next-hand-button");
 
-console.log(VALEURES);
 
 let card = class {
     constructor(value, color){

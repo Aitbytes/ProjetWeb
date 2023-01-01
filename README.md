@@ -1,2 +1,2 @@
 # ProjetWeb
-Simple Web App web programming class
+Simple Web App project for web programming class

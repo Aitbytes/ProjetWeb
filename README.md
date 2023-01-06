@@ -1,2 +1,2 @@
 # ProjetWeb
-Simple Web App project for web programming class
+Simple BlackJack game made for a class project.
